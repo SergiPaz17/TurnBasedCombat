@@ -124,6 +124,33 @@ public class BattleSystem : MonoBehaviour
 		StartCoroutine(EnemyTurn());
 	}
 
+	void MenuMagia()
+    {
+
+    }
+
+
+	IEnumerator PlayerMagia()
+	{
+		bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
+
+		enemyHUD.SetHP(enemyUnit.currentHP);
+		dialogueText.text = "El ataque ha funcionado!";
+
+		yield return new WaitForSeconds(2f);
+
+		if (isDead)
+		{
+			state = BattleState.WON;
+			EndBattle();
+		}
+		else
+		{
+			state = BattleState.ENEMYTURN;
+			StartCoroutine(EnemyTurn());
+		}
+	}
+
 	public void OnAttackButton()
 	{
 		if (state != BattleState.PLAYERTURN)
